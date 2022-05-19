@@ -1,9 +1,8 @@
-# Simple Pong in Python 3 for Beginners
-# By @TokyoEdTech
+	# Simple Pong in Python 3 for Beginners
+	# By @TokyoEdTech
 
 import turtle
 import os
-
 wn = turtle.Screen()
 wn.title("Pong")
 wn.bgcolor("black")
@@ -39,8 +38,8 @@ ball.shape("circle")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 6
-ball.dy = 6
+ball.dx = 10
+ball.dy = 10
 
 # Scoreboard
 pen = turtle.Turtle()
@@ -98,10 +97,18 @@ wn.onkeypress(paddle_a_down, "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
 
+
+#Increase ball speed overtime
+def velocityIncrease():
+		#Increase Ball Speed 
+		if (score_a % 2 != 0 or score_b % 2 != 0):
+			ball.dx += 1
+			ball.dy += 1
+
 # Main game loop
 while gameOn:
 	wn.update()
-	
+
 	# Move the ball
 	ball.setx(ball.xcor() + ball.dx)
 	ball.sety(ball.ycor() + ball.dy)
@@ -120,6 +127,7 @@ while gameOn:
 	#Hits Paddle A
 	if ball.xcor() > 350:
 		score_a += 1
+		velocityIncrease()
 		ball.color("blue")
 		pen.clear()
 		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 48, "bold"))
@@ -129,6 +137,7 @@ while gameOn:
 	#Hits Paddle B
 	elif ball.xcor() < -350:
 		score_b += 1
+		velocityIncrease()
 		ball.color("red")
 		pen.clear()
 		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 48, "bold"))
@@ -143,6 +152,17 @@ while gameOn:
 		ball.dx *= -1
 
 	#AI for Left Paddle
+	if (ball.xcor() > 0 and ball.ycor() > paddle_b.ycor()):
+		y = paddle_b.ycor()
+		y += 8
+		paddle_b.sety(y)
+	
+	if (ball.xcor() > 0 and ball.ycor() < paddle_b.ycor()):
+		y = paddle_b.ycor()
+		y -= 8
+		paddle_b.sety(y)
+
+
 
 	# Check for game being finished
 	if score_a > 11 or score_b > 11:		
@@ -160,4 +180,49 @@ while gameOn == False:
 	overMessage.hideturtle()
 	overMessage.goto(0, 100)
 	overMessage.write("Game Over!", align="center", font=("Courier", 24, "normal"))
-	
+
+
+
+#Implement A Main Menu, deprecated
+
+# #Make menu
+# menu = turtle.Screen()
+# menu.title("Pong")
+# menu.bgcolor("black")
+# menu.setup(width=800, height=600)
+
+# #Choose Options
+# title = turtle.Turtle()
+# title.speed(0)
+# title.shape("square")
+# title.color("white")
+# title.penup()
+# title.hideturtle()
+# title.goto(0, 145)
+# title.write("PONG", align="center", font=("Courier", 48, "bold"))
+
+# #Multiplayer Game
+# multi = turtle.Turtle()
+# multi.speed(0)
+# multi.shape("square")
+# multi.color("white")
+# multi.penup()
+# multi.hideturtle()
+# multi.goto(0, 0)
+# multi.write("Press 1 \n 2 Players ", align="center", font=("Courier", 24, "bold"))
+
+# #Solo
+# solo = turtle.Turtle()
+# solo.speed(0)
+# solo.shape("square")
+# solo.color("white")
+# solo.penup()
+# solo.hideturtle()
+# solo.goto(0, -145)
+# solo.write("Press 2 \n 1 Player ", align="center", font=("Courier", 24, "bold"))
+
+		
+# #Game Start Keyboard bindings
+# menu.listen()
+# menu.onkeypress(gameStarted(True), "m")
+# menu.onkeypress(gameStarted(False), "s")
