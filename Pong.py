@@ -49,29 +49,47 @@ pen.shape("square")
 pen.color("white")
 pen.penup()
 pen.hideturtle()
-pen.goto(0, 260)
-pen.write("0 : 0", align="center", font=("Courier", 24, "normal"))
+pen.goto(0, 230)
+pen.write("0 : 0", align="center", font=("Courier", 48, "bold"))
 
-# Functions
+
+# Only Move paddle up if it won't exit the game board
+def isValidPaddleMovement(paddle, up=False):
+	if (up == False):
+		if (paddle.ycor() <= -240):
+			return False
+		return  True
+	else:
+		if (paddle.ycor() >= 250):
+			return False
+		return True
+	
+
+# Movement of Paddles
 def paddle_a_up():
-	y = paddle_a.ycor()
-	y += 20
-	paddle_a.sety(y)
+	if (isValidPaddleMovement(paddle=paddle_a, up=True)):
+		y = paddle_a.ycor()
+		y += 20
+		paddle_a.sety(y)
 
 def paddle_a_down():
-	y = paddle_a.ycor()
-	y -= 20
-	paddle_a.sety(y)
+	if (isValidPaddleMovement(paddle=paddle_a)):
+		y = paddle_a.ycor()
+		y -= 20
+		paddle_a.sety(y)
 
 def paddle_b_up():
-	y = paddle_b.ycor()
-	y += 20
-	paddle_b.sety(y)
+	if (isValidPaddleMovement(paddle=paddle_b, up=True)):
+		y = paddle_b.ycor()
+		y += 20
+		paddle_b.sety(y)
 
 def paddle_b_down():
-	y = paddle_b.ycor()
-	y -= 20
-	paddle_b.sety(y)
+	if (isValidPaddleMovement(paddle=paddle_b)):
+		y = paddle_b.ycor()
+		y -= 20
+		paddle_b.sety(y)
+
 
 # Keyboard bindings
 wn.listen()
@@ -89,7 +107,6 @@ while gameOn:
 	ball.sety(ball.ycor() + ball.dy)
 
 	# Border checking
-
 	# Top and bottom
 	if ball.ycor() > 290:
 		ball.sety(290)
@@ -105,7 +122,7 @@ while gameOn:
 		score_a += 1
 		ball.color("blue")
 		pen.clear()
-		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 48, "bold"))
 		ball.goto(0, 0)
 		ball.dx *= -1
 
@@ -114,7 +131,7 @@ while gameOn:
 		score_b += 1
 		ball.color("red")
 		pen.clear()
-		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 48, "bold"))
 		ball.goto(0, 0)
 		ball.dx *= -1
 
@@ -125,8 +142,10 @@ while gameOn:
 	elif ball.xcor() > 340 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
 		ball.dx *= -1
 
+	#AI for Left Paddle
+
 	# Check for game being finished
-	if score_a > 0 or score_b > 0:		
+	if score_a > 11 or score_b > 11:		
 		gameOn = False
 
 while gameOn == False:
