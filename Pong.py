@@ -18,7 +18,7 @@ score_b = 0
 paddle_a = turtle.Turtle()
 paddle_a.speed(0)
 paddle_a.shape("square")
-paddle_a.color("white")
+paddle_a.color("blue")
 paddle_a.shapesize(stretch_wid=5,stretch_len=1)
 paddle_a.penup()
 paddle_a.goto(-350, 0)
@@ -27,7 +27,7 @@ paddle_a.goto(-350, 0)
 paddle_b = turtle.Turtle()
 paddle_b.speed(0)
 paddle_b.shape("square")
-paddle_b.color("white")
+paddle_b.color("red")
 paddle_b.shapesize(stretch_wid=5,stretch_len=1)
 paddle_b.penup()
 paddle_b.goto(350, 0)
@@ -35,7 +35,7 @@ paddle_b.goto(350, 0)
 # Ball
 ball = turtle.Turtle()
 ball.speed(0)
-ball.shape("square")
+ball.shape("circle")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
@@ -50,7 +50,7 @@ pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
-pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "normal"))
+pen.write("0 : 0", align="center", font=("Courier", 24, "normal"))
 
 # Functions
 def paddle_a_up():
@@ -100,17 +100,21 @@ while gameOn:
 		ball.dy *= -1
 	
 	# Left and right
+	#Hits Paddle A
 	if ball.xcor() > 350:
 		score_a += 1
+		ball.color("blue")
 		pen.clear()
-		pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 		ball.goto(0, 0)
 		ball.dx *= -1
 
+	#Hits Paddle B
 	elif ball.xcor() < -350:
 		score_b += 1
+		ball.color("red")
 		pen.clear()
-		pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+		pen.write("{} : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 		ball.goto(0, 0)
 		ball.dx *= -1
 
@@ -126,13 +130,15 @@ while gameOn:
 		gameOn = False
 
 while gameOn == False:
-	paddle_a.hideturtle
-	paddle_b.hideturtle
+	paddle_a.color("black")
+	paddle_b.color("black")
+	ball.color("black")
 	overMessage = turtle.Turtle()
 	overMessage.speed(0)
 	overMessage.shape("square")
 	overMessage.color("white")
 	overMessage.penup()
 	overMessage.hideturtle()
-	overMessage.goto(0, 0)
+	overMessage.goto(0, 100)
 	overMessage.write("Game Over!", align="center", font=("Courier", 24, "normal"))
+	
